@@ -1,10 +1,11 @@
+"""Module to demonstrate connecting to AWS S3 using Boto3."""
+
 import boto3
 from botocore.exceptions import NoCredentialsError, ClientError
 
 
 def list_s3_buckets():
-    # Initialize the S3 client. Boto3 automatically detects the
-    # credentials you just set up via 'aws configure'.
+    """Initializes an S3 client and lists all buckets in the account."""
     s3_client = boto3.client("s3")
 
     try:
@@ -27,7 +28,7 @@ def list_s3_buckets():
         print("Error: AWS credentials not found. Please run 'aws configure' first.")
     except ClientError as e:
         print(f"AWS Permission or Client Error: {e}")
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"An unexpected error occurred: {e}")
 
 

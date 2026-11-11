@@ -1,0 +1,36 @@
+name: Python Code Quality
+
+on: [push, pull_request]
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black flake8 pylint
+
+      - name: Check formatting with Black
+        run: |
+          # Fails if code is not formatted according to Black's rules
+          black --check .
+
+      - name: Lint with Flake8
+        run: |
+          # Fails on critical logical errors or style violations not covered by Black
+          flake8 .
+
+      - name: Analyze with Pylint
+        run: |
+          # Evaluates deeper structural issues. 
+          # Fails if the score drops below a configured threshold (requires .pylintrc)
+          pylint $(git ls-files '*.py')

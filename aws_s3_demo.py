@@ -15,7 +15,8 @@ def list_s3_buckets():
 
         if not buckets:
             print(
-                "Connection successful! However, no S3 buckets were found in this account."
+                "Connection successful! However, "
+                "no S3 buckets were found in this account."
             )
         else:
             print(f"Connection successful! Found {len(buckets)} bucket(s):")
